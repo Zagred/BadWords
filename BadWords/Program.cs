@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace BadWords
 {
-    internal class Program:CheckComments
+    internal class Program
     {
         static void Main(string[] args)
         {
             string path = @"C:\Users\PlamenPandev\Desktop\BadWords\BadWords";
+            var check = new CheckComments();
             List<string> comments = new List<string>()
             {
                 "everything is fine",
@@ -20,7 +21,7 @@ namespace BadWords
                 "нещо си pillu",
                 "ich bin neshto si"
             };
-            CheckComments.test(path, comments);
+           check.test(path, comments);
         }
     }
 }

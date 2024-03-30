@@ -9,7 +9,7 @@ namespace BadWords
 {
     public class CheckComments
     {
-        private static Dictionary<string, bool> flagedWords = new Dictionary<string, bool>();
+        private static HashSet<string> flagedWords = new HashSet<string>();
         private static List<string> Init_Dict(string folder)
         {
             List<string> folderContent = new List<string>();
@@ -21,38 +21,30 @@ namespace BadWords
             }
             return folderContent;
         }
-        public static void test(string path, List<string> comments)
+        public void test(string path, List<string> comments)
         {
             List<string> folders = Init_Dict(path);
             foreach (string folder in folders)
             {
-                foreach (string filepath in Directory.GetFiles(folder, "*.txt"))// всчики файлове в папката
+                foreach (string filepath in Directory.GetFiles(folder, "*.txt"))
                 {
                     string[] fileContent = File.ReadAllLines(filepath);
                     for (int i = 0; i < fileContent.Length; i++)
                     {
-                        try
+                        if (!flagedWords.Contains(fileContent[i]))
                         {
-                            flagedWords.Add(fileContent[i], true);
-                        }
-                        catch
-                        {
-                            // Console.WriteLine("this word already exist:", fileContent[i]);
-                        }
+                            flagedWords.Add(fileContent[i]);
+                        }              
+                       
                     }
                 }
             }
-
             foreach(string comment in comments)
             {
                 string[] wordsInComment = comment.Split(new char[] { ',', ' '});
                 foreach (string word in wordsInComment)
                 {
-                    try
-                    {
-                        flagedWords.Add(word, true);   
-                    }
-                    catch
+                    if (flagedWords.Contains(word))
                     {
                         Console.WriteLine(comment);
                         break;
