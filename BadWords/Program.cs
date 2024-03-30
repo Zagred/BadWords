@@ -9,10 +9,11 @@ namespace BadWords
 {
     internal class Program
     {
+        private static CheckComments check = new CheckComments();
+
         static void Main(string[] args)
         {
             string path = @"C:\Users\PlamenPandev\Desktop\BadWords\BadWords";
-            var check = new CheckComments();
             List<string> comments = new List<string>()
             {
                 "everything is fine",
